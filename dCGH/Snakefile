@@ -301,7 +301,7 @@ rule make_bed_indiv_refined_calls:
 rule refine_calls:
     input: table="call_tables_merged_per_indiv/{sample}.segs.gz", test_DTS="%s/500_bp_{sample}" % DTS_DIR, ref_DTS=["%s/500_bp_%s"%(DTS_REF_DIR, ref) for ref in references]
     output: "resolved_calls_per_indiv/{sample}.segs","beds_all_calls/{sample}.bed"
-    params: sge_opts="-l mfree=2G -N refining_{sample} -l h_rt=2:00:00:00",
+    params: sge_opts="-l mfree=2G -N refining_{sample} -l h_rt=10:00:00",
             ref_DTS=":".join(["%s/500_bp_%s"%(DTS_REF_DIR, ref) for ref in references]),
             subset_indivs=":".join(references + ['{sample}'])
     benchmark: "benchmarks_dCGH/refine_calls.{sample}.txt"
