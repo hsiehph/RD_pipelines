@@ -22,7 +22,7 @@ from wssd_pw_common import *
 
 def create_DenseTrackSet(outTableFile,contigLengths,grp):
 
-    print("creating  Dense Track Set...")
+    print "creating  Dense Track Set..."
     track = DenseTrackSet(
                          contigLengths,
                          outTableFile,
@@ -35,14 +35,14 @@ def create_DenseTrackSet(outTableFile,contigLengths,grp):
     track.addGroup( grp ) 
     track[grp].addArray( tables.BoolAtom(), [] )    
     
-    print("done")
+    print "done"
     return track
 
 def set_regions(annot_locs,dts_annotation,grp):
     
     for contig in dts_annotation.mContigNameLen:
         
-        print("setting contig:",contig,"...")
+        print "setting contig:",contig,"..."
         load_contig = dts_annotation[grp][contig][:]
 
         starts = annot_locs[np.where(annot_locs['chr']==contig)]['start']
@@ -69,7 +69,7 @@ def load_positions(fn_input,chr_col,start_col,end_col,header,delim=None):
 
     dt = np.dtype([('chr', np.str_, 8), ('start', np.uint32),('end',np.uint32)])
 
-    print("getting columns %d:%d:%d"%(chr_col,start_col,end_col))
+    print "getting columns %d:%d:%d"%(chr_col,start_col,end_col)
     positions = np.loadtxt(fn_input, dtype=dt, delimiter=delim, skiprows=nskiprows, usecols=(chr_col,start_col,end_col))    
     positions = np.sort(positions,axis=0,order=['chr'])
     return positions
@@ -87,7 +87,7 @@ if __name__=='__main__':
     opts.add_option('','--chr:start:end_cols',dest='chr_start_end', default="0:1:2")
     opts.add_option('','--header',default=False,action='store_true',dest='header')
 
-    print("annotation")    
+    print "annotation"    
 
     (o, args) = opts.parse_args()
 

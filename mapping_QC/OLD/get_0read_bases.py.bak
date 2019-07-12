@@ -42,7 +42,7 @@ if __name__ == "__main__":
         if contig in masked_dict:
             n_masked += masked_dict[contig]
         else:
-            print("Contig %s not found in masked contig file %s" % (contig, args.masked_count))
+            print "Contig %s not found in masked contig file %s" % (contig, args.masked_count)
 
     if args.corrected:
         root = "depthAndStarts_wssd.combined_corrected"
@@ -51,7 +51,7 @@ if __name__ == "__main__":
 
     n_wssd = len(args.wssd_files) if args.wssd_files is not None else 0
     n_stat = len(args.stat_files) if args.stat_files is not None else 0
-    entries = list(range((n_wssd + n_stat) * (len(args.contigs) + 1)))
+    entries = range((n_wssd + n_stat) * (len(args.contigs) + 1))
     wssd_dat = pd.DataFrame(index = entries, 
                             columns = ["SAMPLE", "CONTIG", "NZERO"])
 
@@ -60,10 +60,10 @@ if __name__ == "__main__":
         for fn in args.wssd_files:
             wssd = tables.File(fn, "r")
             sn = os.path.basename(os.path.dirname(fn))
-            print("%s\t%s" % (sn, fn))
+            print "%s\t%s" % (sn, fn)
             z_sum = 0
             for contig in args.contigs:
-                print("\t%s" % contig)
+                print "\t%s" % contig
                 contig_rd = wssd.getNode("/%s/%s" % (root, contig))
                 contig_rd.shape[0]
                 sum = contig_rd.shape[0] - np.count_nonzero(contig_rd[:, 0, 0])
@@ -85,7 +85,7 @@ if __name__ == "__main__":
                         stat_dict[sn] = {}
                     stat_dict[sn][contig] = int(nzero)
 
-        for sn in list(stat_dict.keys()):
+        for sn in stat_dict.keys():
             tot = 0
             for contig in args.contigs:
                 wssd_dat.loc[i] = [sn, contig, stat_dict[sn][contig]]
@@ -105,7 +105,7 @@ if __name__ == "__main__":
         sns.barplot(x="NZERO", y="SAMPLE", data = wssd_dat_summary.sort("NZERO", ascending=False))
         ax.set_title("Zero-depth unmasked base count QC")
         ticks = ax.get_xticks().tolist()
-        tick_labels = [round(x/1000000., 1) for x in ticks]
+        tick_labels = map(lambda x: round(x/1000000., 1), ticks)
         plt.xticks(ticks, tick_labels)
 
         ax.set(ylabel = "", xlabel="Count of 0-depth bases (Mb)")

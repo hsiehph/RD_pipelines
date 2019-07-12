@@ -51,7 +51,7 @@ if __name__=="__main__":
     dt = np.dtype([('contig', np.str_, 128), ('start', np.int64),('end',np.int64)])
     sunk_positions = np.loadtxt(o.fn_sunk_locs, dtype=dt, delimiter="\t")
 
-    print(sunk_positions)
+    print sunk_positions
     #positions = np.sort(positions,axis=0,order=['chr'])
 
     #DONE
@@ -67,7 +67,7 @@ if __name__=="__main__":
     alt_assembly_sunkmask = None    
 
     if o.fn_alt_assembly_to_curr != None:
-        print("BROKEN! DON'T KNOW WHY!")
+        print "BROKEN! DON'T KNOW WHY!"
         exit()
         alt_assembly_sunkmask = DenseTrackSet(
                                  o.fn_alt_contigs,
@@ -88,13 +88,13 @@ if __name__=="__main__":
 
     grps = ['isntSunkOrIsMasked','isUnmasked','isSunk']
 
-    for i in range(3):
+    for i in xrange(3):
         sunkmask_track.addGroup(grps[i])
         sunkmask_track[grps[i]].addArray(tables.BoolAtom(), [])
 
 
     for contig in input_fa:
-        print(contig)
+        print contig
 
         char_fa_RM = np.array(str(input_fa_RM[contig]),'c')
         char_fa_TRF = np.array(str(input_fa_TRF[contig]),'c')
@@ -108,7 +108,7 @@ if __name__=="__main__":
             sunk_vect = np.ones(masked.shape[0])
         elif alt_assembly_to_curr != None:
             sunk_vect = np.zeros(masked.shape[0])
-            for alt,curr in     alt_assembly_to_curr.items():
+            for alt,curr in     alt_assembly_to_curr.iteritems():
                 alt_chr,alt_start,alt_end = alt            
                 curr_chr,curr_start,curr_end = curr
                 if curr_chr != contig: continue

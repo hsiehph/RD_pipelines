@@ -69,13 +69,13 @@ if __name__=="__main__":
     mask_track[grp].addArray( tables.BoolAtom(), [3] )    
 
     for contig in input_fa:
-        print(contig)
+        print contig
         contig = contig.replace(".","_")
         #fa_contig=old_to_new_contigs!=None and old_to_new_contigs[contig] or contig
         char_fa_RM = np.array(str(input_fa_RM[contig]),'c')
         char_fa_TRF = np.array(str(input_fa_TRF[contig]),'c')
-        print(char_fa_RM[0:100])
-        print(char_fa_TRF[0:100])
+        print char_fa_RM[0:100]
+        print char_fa_TRF[0:100]
 
         if limit_to_contigs == None or contig in limit_to_contigs:
             if  exclude_TRF_from !=None and contig in exclude_TRF_from:
@@ -85,10 +85,10 @@ if __name__=="__main__":
 
             masked = pad(masked,o.pad)
         else:
-            print("IGNORING CURRENT CONTIG", contig)
+            print "IGNORING CURRENT CONTIG", contig
             masked = (char_fa_RM=="?")|(char_fa_TRF=="?") ###SHOULD EVALUATE TO ALL FALSES!
             
-        print(masked[0:100])
+        print masked[0:100]
 
         ###here, really should be putting the RM in 0, and the TRF in 1... or, other way around, can't remember :)
         mask_track['mask'][contig][:,0] = masked    

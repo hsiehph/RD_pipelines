@@ -48,7 +48,7 @@ if __name__ == "__main__":
     sample = args.wssd_file.split("/")[-2]
     plt.title("%s %s" % (sample, args.chr))
     ticks = axes.get_xticks().tolist()
-    tick_labels = [round(x * args.window_slide/1000000., 2) for x in ticks]
+    tick_labels = map(lambda x: round(x * args.window_slide/1000000., 2), ticks)
     plt.xticks(ticks, tick_labels)
     plt.xlabel("Position (Mb)")
     plt.ylabel("Read depth")
